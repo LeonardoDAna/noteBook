@@ -32,4 +32,39 @@ const arr = [1, 2, 3, 4, 5]
 arr.flatMap(x=>[x, x + 2])
 // => [1, 2, 3, 4, 5]
 ```
-# 展开运算符(`...[arr]`)
+# 扩展运算符(`...[arr]`)
+扩展运算符可以将一个数组转为逗号分隔的参数序列
+```
+const arr1 = [1, 2, 3, 4, 5]
+
+console.log(...arr)
+// 1 2 3 4 5
+
+console.log(...arr, 6)
+// 1 2 3 4 5 6
+```
+该运算符主要用于函数调用
+```
+function addNum(x, y, z){
+    console.log(x + y + z)
+}
+
+const arr = [1, 2, 3]
+addNum(...arr)
+// 6
+
+const demoA = [1, 2, 3, 4];
+const demoB = [5, 6, 7, 8];
+let indexArr = [];
+[...demoA, ...demoB].forEach(e => {
+    indexArr.push(e * e)
+})
+console.log(indexArr);
+// [1, 4, 9, 16, 25, 36, 49, 64]
+```
+扩展运算符还可以字符串转为数组
+```
+const str  =  'Hellow,World!'
+console.log([...str]);
+// ["H", "e", "l", "l", "o", "w", ",", "W", "o", "r", "l", "d", "!"]
+```
