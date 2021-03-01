@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const m1 = new Map([
+            [{
+                name: 'a'
+            }, 111],
+            ['b', 222]
+        ])
+        const o1 = {
+            name: 'a'
+        }
+        console.log(m1) // {"a" => 111, "b" => 222}
+        console.log(m1.get('b'))
+        console.log(m1.get({
+            name: "a"
+        }))
+        console.log(m1.keys())
+        // m1.get('a') // 111
+
+        // const m2 = new Map([
+        //     ['c', 3]
+        // ])
+        // const m3 = new Map(m2)
+        // m3.get('c') // 3
+        // m3.has('c') // true
+        // m3.set('d', 555)
+        // m3.get('d') // 555
+        let nums = [4, 3, 2, 7, 8, 2, 3, 1]
+        const findDuplicates = function (nums) {
+            let arr = [];
+            nums.map((item, index) => {
+                console.log(nums.indexOf(item), index);
+                if (nums.indexOf(item) !== index) {
+                    arr.push(item)
+                }
+            });
+            return arr
+        };
+        console.log(findDuplicates(nums));
+
+        var arr = [1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7, 8];
+        var maxNum = 0;
+        var maxName = "";
+        var obj = {};
+        arr.forEach((ele, index) => {
+            obj[ele] ? obj[ele] += 1 : obj[ele] = 1;
+        })
+        for (let r in obj) {
+            if (obj[r] > maxNum) {
+                maxNum = obj[r]
+                maxName = r
+            }
+        }
+        console.log(`最多重复的数${maxName},重复次数为:${maxNum}`)
+    </script>
+</body>
+
+</html>

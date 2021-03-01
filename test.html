@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    get和post的区别
+    get url的最长多少
+    <!-- 256个字节 -->
+    post 请求体body的最大是多少
+    <!-- post 请求体理论上来讲是没有限制的  在本地tomcat上限制大小为2M -->
+    cors 攻击
+    http协议和tcp/ip协议的区别
+    <!-- tcp/ip 三次握手完成传输信息 
+        http 协议是建立在TCP协议之上的一种应用
+    -->
+    数组和链表的区别
+    <!-- 
+        数组
+            以电影院位置作比喻
+            数组在内存中好比电影院连坐的一块区域
+            插入和删除的效率底下
+            随机读取效率很高
+            不利于扩展
+        链表
+            在内存中可以存在任何地方
+            每一个数据都保存了下一个数据的内存地址,通过这个地址找到下一个地址
+            增加数据和删除数据很方便
+            查找时效率低,因为不具备随机访问性
+            不指定大小,扩展方便
+     -->
+    数组和map的区别
+    <!-- 
+
+     -->
+    map 可以有重复的键吗
+    <!-- 不可以 -->
+    小程序 测试版不重新发包的情况下如何切换版本
+    cookie sessionstroage localstroage 的区别
+    对接口的安全措施
+    <script>
+        var myname = "小明";
+
+        function showName() {
+            console.log(myname); // undefined
+            if (0) {
+                var myname = "小红"
+            }
+            console.log(myname); // undefined 
+        }
+        showName();
+    </script>
+</body>
+
+</html>
