@@ -9,23 +9,17 @@
 
 <body>
     <script>
-        let arr = [-2, 0, 3, -5, 2, -1]
+        var num1 = 1,
+            num2 = 2;
 
-        function NumArray(arr) {
-            let preSum = []
-            preSum[0] = 0
-            for (let i = 0; i < arr.length; i++) {
-                preSum[i + 1] = preSum[i] + arr[i]
-            }
-            console.log(preSum);
-            this.preSum = preSum
+        function cal() {
+            var num1 = 3,
+                num2 = 4;
+            console.log(this.num1 + this.num2);
+            console.log(num1 + num2);
         }
-        NumArray.prototype.sumRange = function (i, j) {
-            console.log(this.preSum[j + 1] - this.preSum[i]);
-            return this.preSum[j + 1] - this.preSum[i]
-        };
-        let a = new NumArray(arr)
-        a.sumRange(2,4)
+        new cal() //  new 改变了this的指向 但是cal函数中this并没有绑定num1 和num2   
+        cal() // 这时this指向 windows
     </script>
 </body>
 
