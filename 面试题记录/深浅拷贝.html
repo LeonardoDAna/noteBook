@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .halfBorder {
+      width: 400px;
+      height: 200px;
+      transform: scale(0.5, 0.5);
+      border: 1px solid black;
+      margin: 0 auto;
+    }
+
+    .border {
+      width: 200px;
+      height: 100px;
+      margin: 0 auto;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="halfBorder"></div>
+  <div class="border"></div>
+</body>
+<script>
+  // 浅拷贝
+  function shallowCopy(target, source) {
+    if (!target || typeof target !== 'object') return
+    if (!source || typeof source !== 'object') return
+    for (let key in source) {
+      if (source.hasOwnProperty(key)) {
+        target[key] = source[key]
+      }
+    }
+  }
+
+  function deepCopy(target, source) {
+    if (!target || typeof target !== 'object') return
+    if (!source || typeof source !== 'object') return
+    for (let key in source) {
+      if (source.hasOwnProperty(key)) {
+        if (source[key] && typeof source[key] == 'object') {
+          target[key] = Array.isArray(source[key]) ? [] : {}
+          deepCopy(target[key], source[key])
+        } else {
+          target[key] = source[key]
+        }
+      }
+    }
+  }
+  let obj = {
+    name: 'wang',
+    age: 23,
+    hobbies: 'basketball',
+    equipment: {
+      laptop: 1,
+      computer: 1,
+      keyboard: 2,
+      mouse: 2,
+    }
+  }
+  let newObj = {}
+  // shallowCopy(newObj, obj)
+  deepCopy(newObj, obj)
+  console.log(newObj);
+  obj.name = 'zhang'
+  console.log(obj);
+  console.log(newObj);
+</script>
+
+</html>

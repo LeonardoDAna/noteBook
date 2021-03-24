@@ -1,4 +1,4 @@
-### 2021 03 01
+# 2021 03 01
 
 ## `get` 和 `post` 的区别
 
@@ -166,7 +166,7 @@ function deepCopy(target,source){
     if(!source || typeOf source !== 'object') return
     for(let key in source){
         if(source.hasOwnProperty(key)){
-            if(source[key] || typeOf source == 'object'){
+            if(source[key] && typeOf source == 'object'){
                 target[key] = Array.isArray(source[key])?[]:{}
                 deepCopy(target[key],source[key])
             }else{
@@ -179,19 +179,69 @@ function deepCopy(target,source){
 
 ## 怎么画一条 0.5px 的线
 
+```
+.halfBorder{
+    border:1px solid black;
+    tranform:scale(0.5,0.5)
+}
+```
+
 ## 两个数组合并之后去重
+
+```
+    let concatArr = a.concat(b)
+
+    function nodup(arr) {
+      let hashMap = new Map
+      let requestArr = []
+      for (let i = 0; i < arr.length; i++) {
+        if (hashMap.has(arr[i])) {
+          hashMap.set(arr[i], true)
+        } else {
+          hashMap.set(arr[i], false)
+          requestArr.push(arr[i])
+        }
+      }
+      return requestArr
+    }
+    console.log(nodup(concatArr));
+```
 
 ## `set` `map` `weakset` `weakmap` 的区别
 
+set 类似于数组，但是值都是唯一且无序的，没有重复的值。set 本身是一种构造函数，用来生成 set 数据结构。set 对象允许存储任意类型的数据。
+
+weakset 只能存储弱引用对象，即 js 垃圾回收机制不考虑 weakset 对该对象的应用，如果没有其他的变量引用的话，则这个对象就会被垃圾回收机制回收掉
+
+map 是一组键值对的结构，类似对象，但是键可以是任意类型且不能重复，可以遍历。
+
+weakmap 只接受对象作为键名（null 除外），不能遍历，键名对象没有被引用就会被垃圾回收掉
+
 ## 用`reduce`对对象数组去重
+
+reduce 实质上是一个累计器函数，通过用户自定义的累计器对数组成员进行自定义累计，得出一个由累计器生成的值。另外 reduce 还有一个胞弟 reduceRight，两个方法的功能其实是一样的，只不过 reduce 是升序执行，reduceRight 是降序执行。
+
+```
+function Uniq(arr = []) {
+    return arr.reduce((t, v) => t.includes(v) ? t : [...t, v], []);
+}
+const arr = [2, 1, 0, 3, 2, 1, 2];
+Uniq(arr); // [2, 1, 0, 3]
+
+```
 
 ## 数组的`map` , `filter` , `foreach` , `every` , `some` ,`reduce`方法
 
 ## 判断一个变量的数据类型是什么怎么判断
 
-## `intanceof`和`typeof`区别以及各自优劣
+## `instanceof`和`typeof`区别以及各自优劣
+
+typeof 用来区分 undefined,number,boolean,string,funciton,object
+instanceof 用来区分一个object属于什么类
 
 ## `==`和`===`的区别
+
+`==`会有类型转换 `===` 必须要类型相同和值相同才会返回 ture
 
 ## 用 es5 的语法去重[1,1,'a','a',NaN,NaN]
 
