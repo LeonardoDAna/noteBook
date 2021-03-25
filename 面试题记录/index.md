@@ -237,7 +237,7 @@ Uniq(arr); // [2, 1, 0, 3]
 ## `instanceof`和`typeof`区别以及各自优劣
 
 typeof 用来区分 undefined,number,boolean,string,funciton,object
-instanceof 用来区分一个object属于什么类
+instanceof 用来区分一个 object 属于什么类
 
 ## `==`和`===`的区别
 
@@ -249,13 +249,87 @@ instanceof 用来区分一个object属于什么类
 
 ## link 和 @import 的区别
 
+link
+
+- 是 html 标签 不会有兼容性问题
+- link 会和 html 同时加载
+- link 方式的权重高于@import 的权重
+
+@import
+
+- 是 css 的语法，只有导入样式表的作用
+- @import 引入的 css 在 html 加载完毕后被加载
+- @import 是依赖 css 的 存在一定的兼容问题
+
 ## 谈谈对 BFC 的理解
+
+BFC 的触发条件：
+
+- float 元素
+- position： absolute/fiexd
+- display: inline-block/table-cells
+- overflow: 除了 visible 以外的所有值
+
+BFC 的特性：
+
+- 属于同一个 BFC 的两个相邻的 Box 边距会被折叠
+- 属于同一个 BFC 的两个相邻 Box 垂直排列
+- BFC 的区域不会和 float 的元素区域重叠
+- 文字层不会被浮动层覆盖，环绕于周围
 
 ## 图片的懒加载和预加载
 
+懒加载：有利于性能优化，减轻服务器的压力，提升用户体验。
+
+懒加载的技术实现：首先将页面上的图片的 src 设为空，把图片的真实路径存放起来，当页面滚动时监听 scroll 事件，在 scroll 事件的回调中，判断懒加载的图片是否进入了可视范围了，这时候把真实的图片地址放到图片的 src 中，这样就实现了懒加载。
+
+预加载：在网页全部加载之前，对一些主要内容进行加载，以提供给用户更好的体验，减少等待的时间。否则，如果一个页面的内容过于庞大，没有使用预加载技术的页面就会长时间的展现为一片空白，直到所有内容加载完毕。
+
+预加载和懒加载相反，一个是提前执行，一个延迟执行。一个为服务器减少压力，一个则会增加服务器压力
+
 ## ES6 模块和 CommonJS 模块的区别
 
+ES6 导出/入模块方式：
+
+```
+// 导出
+function fn(a){
+  console.log(a)
+}
+export default fn
+
+// 导入
+import fn from ***.js
+fn()
+```
+
+CommonJS 导出/入模块方式：
+
+```
+// 导出
+function fn(a){
+  console.log(a)
+}
+module exports = {
+  fn
+}
+
+// 导入
+const BModule = require('./B.js')
+BModule.fn()
+
+```
+
+这两者的主要区别主要有以下两点：
+
+- 对于模块的依赖，CommonJS 是动态的，ES6 Module 是静态的
+- CommonJS 导入的是值的拷贝，ES6 Module 导入的是值的引用
+
 ## 对 Http 缓存的理解
+
+- HTTP 缓存主要分强制缓存和对比缓存
+- 强制缓存的 HTTP 相关头部 Cache-Control，Expires（HTTP1.0）,浏览器直接读本地缓存，不会再跟服务器端交互，状态码 200。
+- 对比缓存的 HTTP-相关头部 Last-Modified / If-Modified-Since， Etag / If-None-Match (优先级比 Last-Modified / If-Modified-Since 高)，每次请求需要让服务器判断一下资源是否更新过，从而决定浏览器是否使用缓存，如果是，则返回 304，否则重新完整响应。
 
 ## async/await 和 promise 的各自优劣
 
