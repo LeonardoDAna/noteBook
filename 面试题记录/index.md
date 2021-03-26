@@ -237,7 +237,10 @@ Uniq(arr); // [2, 1, 0, 3]
 ## `instanceof`和`typeof`区别以及各自优劣
 
 typeof 用来区分 undefined,number,boolean,string,funciton,object
-instanceof 用来区分一个 object 属于什么类
+
+instanceof 用来区分一个 object 属于什么类（）
+
+instanceof 运算符是用来测试一个对象是否在其原型链原型构造函数的属性。其语法是 object instanceof constructor
 
 ## `==`和`===`的区别
 
@@ -333,7 +336,21 @@ BModule.fn()
 
 ## async/await 和 promise 的各自优劣
 
+async/await
+
+- 让你的代码看起来是同步的（可读性更强），但实际还是异步的
+- async 要在代码里处理异常
+
+promise
+
+- 链式处理 可以自己处理异常
+- promise.all/promise.race 并行处理异步
+
 ## Babel 的原理
+
+Babel 能够转译`es2015+`的代码，让代码可以在版本较低的浏览器或者环境中可以正常运行
+
+Bebal 转译的过程可以分成三部分 代码解析 代码转换 代码生成
 
 ## 实现一个 instanceof 方法
 
@@ -375,11 +392,50 @@ BModule.fn()
 
 ## 什么是响应式布局？怎么实现？
 
-## 怎么清楚浮动？
+## 怎么清除浮动？
+
+在浮动元素下新增一个空的 div 样式 clear:both
+
+```
+floatDiv{
+  clear:both
+}
+// 添加无意义标签 语义化差
+```
+
+伪类清除浮动 (推荐使用)
+
+```
+floatBox:after{
+  content:'';
+  clear:both;
+  display: block;
+  height: 0;
+  clear:both;
+  visibility: hidden
+}
+```
+
+BFC 清除浮动
+
+```
+floatBox{
+  overflow:hidden;
+}
+
+// 内容增多的时候超过盒子大小会导致内容被隐藏
+```
 
 ## 怎么判断回文的方法
 
 ## 浏览器到输入网址回车到渲染发生什么
+
+1.  URL 解析
+2.  DNS 解析
+3.  TCP/IP 链接
+4.  服务器处理请求
+5.  浏览器响应请求
+6.  页面渲染
 
 ## 箭头函数和普通函数的区别
 
@@ -387,7 +443,29 @@ BModule.fn()
 
 ## vue 的组件间传值（父传子，子传父，兄弟组件传值）
 
+父传子
+
+通过绑定 v-bind 和 props 来实现父组件给子组件传值
+
+子传父
+
+子组件不能直接传值给父组件，通过调用父组件的方法把子组件的值传给父组件。使用 this.$emit('listen',value)
+
+兄弟组件传值
+
+vuex
+
+```
+
+```
+
 ## 说说 Vuex 的五个核心属性
+- State
+  - 
+- Mutations
+- Getter
+- Actions
+- modules
 
 ## 代码填充题
 
@@ -405,3 +483,5 @@ var p2 = new Person()
 ## 防抖和节流的区别
 
 ## 知道哪些设计模式吗
+
+## 三次握手 四次挥手
