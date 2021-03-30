@@ -61,7 +61,7 @@
 
 vue 的双向数据绑定 主要采用：数据劫持加`发布者订阅者`模式的方法,通过 object.defineProperty 的 get 和 set ，在数据变动的时候发布消息给订阅者触发监听
 
-```
+``` html
 <body>
   <input id="inputBox" type="text" value="">
   <p id="pBox"></p>
@@ -109,6 +109,8 @@ vdom 是虚拟 DOM(Virtual DOM)的简称，指的是用 JS 模拟的 DOM 结构�
 
 ## 发布者订阅者的设计模式
 
+## this 的指向
+this永远指向的是最后调用它的对象，也就是看它执行的时候是谁调用的
 ## 原型链 微任务宏任务
 
 原型
@@ -148,7 +150,7 @@ vdom 是虚拟 DOM(Virtual DOM)的简称，指的是用 JS 模拟的 DOM 结构�
 
 当引用类型，新的变量复制的是在栈中指向原数据的地址，所以当原数据发生改变的时候新变量的值也会发生变化
 
-```
+``` js
 // 浅拷贝
 function shallowCopy(target,source){
     if(!target || typeOf target !== 'object') return
@@ -179,7 +181,7 @@ function deepCopy(target,source){
 
 ## 怎么画一条 0.5px 的线
 
-```
+``` css
 .halfBorder{
     border:1px solid black;
     tranform:scale(0.5,0.5)
@@ -188,10 +190,10 @@ function deepCopy(target,source){
 
 ## 两个数组合并之后去重
 
-```
+``` js
     let concatArr = a.concat(b)
 
-    function nodup(arr) {
+    function unqi(arr) {
       let hashMap = new Map
       let requestArr = []
       for (let i = 0; i < arr.length; i++) {
@@ -204,7 +206,7 @@ function deepCopy(target,source){
       }
       return requestArr
     }
-    console.log(nodup(concatArr));
+    console.log(unqi(concatArr));
 ```
 
 ## `set` `map` `weakset` `weakmap` 的区别
@@ -221,7 +223,7 @@ weakmap 只接受对象作为键名（null 除外），不能遍历，键名对�
 
 reduce 实质上是一个累计器函数，通过用户自定义的累计器对数组成员进行自定义累计，得出一个由累计器生成的值。另外 reduce 还有一个胞弟 reduceRight，两个方法的功能其实是一样的，只不过 reduce 是升序执行，reduceRight 是降序执行。
 
-```
+``` js
 function Uniq(arr = []) {
     return arr.reduce((t, v) => t.includes(v) ? t : [...t, v], []);
 }
@@ -294,7 +296,7 @@ BFC 的特性：
 
 ES6 导出/入模块方式：
 
-```
+``` js
 // 导出
 function fn(a){
   console.log(a)
@@ -308,7 +310,7 @@ fn()
 
 CommonJS 导出/入模块方式：
 
-```
+``` js
 // 导出
 function fn(a){
   console.log(a)
@@ -331,7 +333,7 @@ BModule.fn()
 ## 对 Http 缓存的理解
 
 - HTTP 缓存主要分强制缓存和对比缓存
-- 强制缓存的 HTTP 相关头部 Cache-Control，Expires（HTTP1.0）,浏览器直接读本地缓存，不会再跟服务器端交互，状态码 200。
+- 强制缓存的 HTTP 相关头部 Cache-Control，Expires（HTTP1.0）,浏览器直接读本地缓存，不会再跟服务器端交互，状态码 200。强制缓存会根据缓存规则判断缓存是否失效，失效则使用对比缓存。
 - 对比缓存的 HTTP-相关头部 Last-Modified / If-Modified-Since， Etag / If-None-Match (优先级比 Last-Modified / If-Modified-Since 高)，每次请求需要让服务器判断一下资源是否更新过，从而决定浏览器是否使用缓存，如果是，则返回 304，否则重新完整响应。
 
 ## async/await 和 promise 的各自优劣
@@ -361,7 +363,7 @@ Bebal 转译的过程可以分成三部分 代码解析 代码转换 代码生�
 ## 什么时候用箭头函数
 
 ## 怎么修改 this 指向
-
+bind ,apply,call
 ## bind , apply ,call 各自有什么区别
 
 ## 有没有改过 webpack 的配置
@@ -369,12 +371,28 @@ Bebal 转译的过程可以分成三部分 代码解析 代码转换 代码生�
 ## Nuxt 和 vue 有什么区别
 
 ## 服务端渲染和客户端渲染的区别优劣
+服务器端渲染的话，首先，前端耗时少。因为后端拼接完了html，浏览器只需要直接渲染出来。
+
+其次，有利于SEO。无需占用客户端资源。即解析模板的工作完全交由后端来做，客户端只要解析标准的html页面即可，这样对于客户端的资源占用更少，尤其是移动端，也可以更省电。
+
+后端生成静态化文件。
+
+但是另一方面来讲的话，服务器端渲染不利于前后端分离，开发效率低。使用服务器端渲染，则无法进行分工合作，则对于前端复杂度高的项目，不利于项目高效开发。
+
 
 ## vue 服务端渲染的原理
 
 ## 单页面和多页面的区别
 
 ## 单页面如何解决首页加载慢的问题
+图片优化
+
+路由懒加载
+
+webpack打包优化
+
+按需引入
+
 
 ## js 里面的 this 是什么
 
@@ -396,29 +414,28 @@ Bebal 转译的过程可以分成三部分 代码解析 代码转换 代码生�
 
 在浮动元素下新增一个空的 div 样式 clear:both
 
-```
+``` css
 floatDiv{
   clear:both
 }
 // 添加无意义标签 语义化差
 ```
 
-伪类清除浮动 (推荐使用)
+伪元素清除浮动 (推荐使用)
 
-```
-floatBox:after{
+``` css
+floatBox::after{
   content:'';
   clear:both;
   display: block;
   height: 0;
-  clear:both;
   visibility: hidden
 }
 ```
 
 BFC 清除浮动
 
-```
+``` css
 floatBox{
   overflow:hidden;
 }
@@ -432,10 +449,11 @@ floatBox{
 
 1.  URL 解析
 2.  DNS 解析
-3.  TCP/IP 链接
-4.  服务器处理请求
-5.  浏览器响应请求
-6.  页面渲染
+3.  
+4.  TCP/IP 链接
+5.  服务器处理请求
+6.  浏览器响应请求
+7.  页面渲染
 
 ## 箭头函数和普通函数的区别
 
@@ -485,3 +503,12 @@ var p2 = new Person()
 ## 知道哪些设计模式吗
 
 ## 三次握手 四次挥手
+
+## 伪类和伪元素
+
+伪类和伪元素都是用来修饰不在文档树中的部分
+
+伪类的操作对象是文档树中已有的元素，而伪元素则创建了一个文档数外的元素。因此，伪类与伪元素的区别在于：有没有创建一个文档树之外的元素。
+
+## 函数作用域和闭包
+
