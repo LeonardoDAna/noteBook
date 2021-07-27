@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let person = {
+      name_: "",
+      age: "",
+      get name() {
+        return this.name_
+      },
+      set name(name) {
+        this.name_ = name
+      },
+      sayName() {
+        console.log(`My Name is ${this.name_}`);
+      }
+    }
+    person.name = 'morty'
+    person.sayName()
+    let {
+      name_,
+      age,
+      job = "software engineer"
+    } = person
+    console.log(person);
+  </script>
+</body>
+
+</html>

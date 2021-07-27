@@ -9,41 +9,124 @@
 
 <body>
   <script>
-    var testData = [{
-      id: 0,
-      name: '0'
-    }, {
-      id: 1,
-      name: '1'
-    }, {
-      id: 2,
-      name: '2'
-    }, {
-      id: 0,
-      name: '3'
-    }, {
-      id: 3,
-      name: '3n'
-    }, {
-      id: 1,
-      name: '4'
-    }, {
-      id: 4,
-      name: '4n'
-    }, {
-      id: 5,
-      name: '5'
-    }];
-    const duplicateRemove = (arr, key) => {
-      return arr.reduce((prev, cur) => {
-        console.log([...prev, cur]);
-        return prev.some(e => e.id === cur.id) ? [] : [...prev, cur]
-        // return [...prev, cur]
-        // 补充
-      }, []);
+    let OG_activeList = [
+      // {
+      //   key: "0",
+      //   level: 0,
+      //   name: "报警管理",
+      //   hasModel: true,
+      //   children: [
+      //     { key: "0-0", level: 1, name: "消防报警" },
+      //     { key: "0-1", level: 1, name: "视频报警" },
+      //     { key: "0-2", level: 1, name: "门禁报警" },
+      //     { key: "0-3", level: 1, name: "电梯报警" },
+      //     { key: "0-4", level: 1, name: "入侵报警" },
+      //     { key: "0-5", level: 1, name: "周界报警" },
+      //     { key: "0-6", level: 1, name: "紧急报警" },
+      //     { key: "0-7", level: 1, name: "客流报警" },
+      //     { key: "0-8", level: 1, name: "能耗报警" },
+      //     { key: "0-9", level: 1, name: "环境报警" },
+      //   ],
+      // },
+      {
+        id: "208237977388777999",
+        name: "0",
+        parentId: "208237885483123215",
+        principalId: "jw",
+        roleIds: [],
+        status: "SimpleStatus_INACTIVE",
+        users: [],
+        weight: 1,
+        subs: [{
+          id: "208237977388777999",
+          name: "0-0",
+          parentId: "208237885483123215",
+          principalId: "jw",
+          roleIds: [],
+          status: "SimpleStatus_INACTIVE",
+          users: [],
+          weight: 1,
+        }, {
+          id: "208237977388777999",
+          name: "0-1",
+          parentId: "208237885483123215",
+          principalId: "jw",
+          roleIds: [],
+          status: "SimpleStatus_INACTIVE",
+          users: [],
+          weight: 1,
+        }]
+      },
+      {
+        id: "208237977388777999",
+        name: "1",
+        parentId: "208237885483123215",
+        principalId: "jw",
+        roleIds: [],
+        status: "SimpleStatus_INACTIVE",
+        users: [],
+        weight: 1,
+        subs: [
+          {
+          id: "208237977388777999",
+          name: "1-0",
+          parentId: "208237885483123215",
+          principalId: "jw",
+          roleIds: [],
+          status: "SimpleStatus_INACTIVE",
+          users: [],
+          weight: 1,
+          subs: [{
+            id: "208237977388777999",
+            name: "1-0-0",
+            parentId: "208237885483123215",
+            principalId: "jw",
+            roleIds: [],
+            status: "SimpleStatus_INACTIVE",
+            users: [],
+            weight: 1,
+          }]
+        }, 
+        {
+          id: "208237977388777999",
+          name: "1-1",
+          parentId: "208237885483123215",
+          principalId: "jw",
+          roleIds: [],
+          status: "SimpleStatus_INACTIVE",
+          users: [],
+          weight: 1,
+          subs:[]
+        }
+      ]
+      }
+    ];
+
+    function deepCopy(target, source, level) {
+      if (!target || typeof target !== "object") return;
+      if (!source || typeof source !== "object") return;
+      for (let i = 0; i < source.length; i++) {
+        if (source[i].subs && source[i].subs.length > 0) {
+          source[i].children = source[i].subs;
+        }
+        source[i].level = level
+      }
+      for (let key in source) {
+        if (source.hasOwnProperty(key)) {
+          // 防止source在原型链上找属性
+          if (source[key] && typeof source[key] == "object") {
+            target[key] = Array.isArray(source[key]) ? [] : {};
+            deepCopy(target[key], source[key], source.level + 1);
+          } else {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
     }
-    var result = duplicateRemove(testData, 'id');
-    console.log(result);
+    let test = []
+    deepCopy(test, OG_activeList, 0)
+    console.log(test);
   </script>
 </body>
 

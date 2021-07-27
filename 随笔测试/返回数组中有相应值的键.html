@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [{
+        name: "壹",
+        id: "1",
+        children: [{
+          id: "3",
+          parentId: "1",
+          name: "叁",
+          children: [{
+            id: "5",
+            parentId: "3",
+            name: "伍",
+          }]
+        }]
+      },
+      {
+        name: "贰",
+        id: "2",
+        children: [{
+          id: "4",
+          parentId: "2",
+          name: "肆"
+        }]
+      }
+    ]
+    // let a
+    // arr.forEach((e) => {
+    //   if (e.name == "壹") {
+    //     a = e
+    //   }
+    // });
+    // console.log(a);
+
+    // 遍历数组 查找节点的父节点
+    function foreachAndSearchDeptParentNode(list, id, parents) {
+      if (typeof list == "undefined" || list.length <= 0) return parents;
+      for (let value of list) {
+        if (id == value.id) { // 找到该节点
+          parents.unshift(value.id)
+          if (value.parentId) { // 继续寻找该节点父节点的父节点，以此类推
+            foreachAndSearchDeptParentNode(arr, value.parentId, parents)
+          }
+        } else {
+          if (value.children) {
+            foreachAndSearchDeptParentNode(value.children, id, parents)
+          }
+        }
+      }
+      return parents
+    }
+    console.log(foreachAndSearchDeptParentNode(arr, '5', []));
+  </script>
+</body>
+
+</html>
