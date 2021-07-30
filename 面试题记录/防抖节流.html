@@ -9,18 +9,20 @@
 </head>
 
 <body>
-  <button onclick="testthrottle(1)">click me</button>
+  <button onclick="testthrottle(1)">节流</button>
+  <button onclick="testdebounce(1)">防抖</button>
   <script>
     let i = 1
     // 防抖 在用户操作结束后达
-    document.onmousemove = (e) => {
-      testdebounce(1)
-      // testthrottle(1)
-    }
+    // document.onmousemove = (e) => {
+    //   testdebounce(1)
+    // }
+
     function logFn(num) {
       console.log(i = i + num);
     };
-    let testdebounce = debounce(logFn, 1000)
+    let testdebounce = debounce(logFn, 3000)
+
     function debounce(fn, delay) {
       let timer
       return function () {
@@ -30,21 +32,22 @@
         }
         let _this = this // 获取debounce执行作用域的this
         let args = arguments;
-        // console.log(_this, args);
         timer = setTimeout(function () {
-          fn.apply(_this, args);// 用apply指向调用debounce的对象，相当于_this.fn(args);
+          fn.apply(_this, args); // 用apply指向调用debounce的对象，相当于_this.fn(args);
         }, delay)
       }
     }
     // 节流 限制用户的操作在固定时间内才能执行一次
     let testthrottle = throttle(logFn, 1000)
+
     function throttle(fn, delay) {
       let timer
       return function () {
         if (timer) {
           return
         }
-        let _this = this, argu = arguments
+        let _this = this,
+          argu = arguments
         timer = setTimeout(function () {
           fn.apply(_this, argu)
           timer = null

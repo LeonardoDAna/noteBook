@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFC实现</title>
+  <style lang="css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      /* margin: 30px; */
+      height: 100px;
+      background-color: red;
+    }
+    .BFCbox{
+      overflow: hidden;
+    }
+    .BFCbox > p{
+      /* overflow: hidden; */
+      /* display: table-cell; */
+      /* position: relative; */
+      /* float: left; */
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <p>BFC实现</p>
+  <div class="BFCbox">
+    <p>BFC实现</p>
+    <div style="background-color: cadetblue;overflow: hidden;">background-color</div>
+  </div>
+</body>
+
+</html>

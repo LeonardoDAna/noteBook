@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css 动画</title>
+  <style lang="css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .All {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .normalBox {
+      width: 200px;
+      height: 200px;
+      font-size: 16px;
+      border: 1px solid #918d8d;
+      color: coral;
+      text-align: center;
+      line-height: 200px;
+      transition: ease 2s;
+    }
+
+    .amplification:hover {
+      transform: scale(1.5, 1.5);
+    }
+
+    .animation:hover {
+      /* 加入infinite关键字 可以让动画无限次播放 */
+      animation: 1s rainbow infinite;
+    }
+
+    @keyframes rainbow {
+      0% {
+        background: #c00;
+      }
+
+      50% {
+        background: orange;
+      }
+
+      100% {
+        background: yellowgreen;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="All">
+    <div class="normalBox amplification">transition 放大</div>
+    <div class="normalBox animation">animation 变色</div>
+  </div>
+</body>
+
+</html>

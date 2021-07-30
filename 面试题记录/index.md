@@ -519,3 +519,18 @@ var p2 = new Person()
 3. 绑定this
 4. 返回新对象
 
+## 基本数据类型 null 和 undefined
+
+``` javascript
+
+typeof null  // 'object'
+
+typeof undefined // 'undefined'
+
+let value = null, a 
+
+value == a // true 
+
+value === a // false
+
+```

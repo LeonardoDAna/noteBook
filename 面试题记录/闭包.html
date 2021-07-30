@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包</title>
+</head>
+
+<body>
+  <script>
+    // 不使用闭包的情况
+    function NOclosure() {
+      for (var i = 0; i <= 5; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, 1000)
+      }
+    }
+    // NOclosure()
+    // 使用闭包的情况
+    function closure() {
+      for (var i = 0; i <= 5; i++) {
+        (function () {
+          callBack(i)
+        })()
+      }
+    }
+    // closure()
+
+    function callBack(params) {
+      setTimeout(() => {
+        console.log(params);
+      }, 1000)
+    }
+
+
+
+    var item = 'hello world'
+    const helloFn = () => {
+      var item = "hello~~~"
+      console.log(item);
+    }
+    helloFn()
+  </script>
+</body>
+
+</html>
