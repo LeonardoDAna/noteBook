@@ -14,6 +14,8 @@
 
 ## cors 攻击
 
+Cross Origin Resource Sharing（跨源资源共享）
+
 ## http 协议和 tcp/ip 协议的区别
 
     tcp/ip 三次握手完成传输信息
@@ -53,7 +55,13 @@
 
 ## cookie sessionstroage localstroage 的区别
 
-<!--  -->
+- `localStroage` 储存在本地，除非主动清理`localStroage`里面的信息，否则会一直存在。存放数据大小为一般为 5MB,而且它仅在客户端（即浏览器）中保存，不参与和服务器的通信。
+- `sessionStroage` 它和 `localStroage` 相似，不同在 `sessionStroage` 会在当前浏览器页面关闭时清除。`sessionStorage` 仅在当前会话下有效，关闭页面或浏览器后被清除。存放数据大小为一般为 5MB,而且它仅在客户端（即浏览器）中保存，不参与和服务器的通信。
+- `cookie` 是服务端发给客户端的特殊信息，`cookie` 是以文本的形式存储在客户端的，每次和服务端通信都会带上它。单个`cookie`保存的数据不能超过 4kb。`cookie` 的作用是 :
+  - （1）判断用户是否登陆过网站，以便下次登录时能够实现自动登录（或者记住密码）。如果我们删除 `cookie` ，则每次登录必须从新填写登录的相关信息。
+  - （2）保存上次登录的时间等信息。
+  - （3）保存上次查看的页面
+  - （4）浏览计数
 
 ## 对接口的安全措施
 
@@ -61,33 +69,32 @@
 
 vue 的双向数据绑定 主要采用：数据劫持加`发布者订阅者`模式的方法,通过 object.defineProperty 的 get 和 set ，在数据变动的时候发布消息给订阅者触发监听
 
-``` html
+```html
 <body>
-  <input id="inputBox" type="text" value="">
+  <input id="inputBox" type="text" value="" />
   <p id="pBox"></p>
 </body>
 <script>
-  let a = new Object;
-  Object.defineProperty(a, 'propertyname', {
+  let a = new Object();
+  Object.defineProperty(a, "propertyname", {
     get: function () {
       return a;
     },
     set: function (newValue) {
-      document.getElementById('inputBox').value = newValue
-      document.getElementById('pBox').innerHTML = newValue
-    }
-  })
-  document.getElementById('inputBox').onkeyup = function (e) {
-    a.propertyname = e.target.value
+      document.getElementById("inputBox").value = newValue;
+      document.getElementById("pBox").innerHTML = newValue;
+    },
+  });
+  document.getElementById("inputBox").onkeyup = function (e) {
+    a.propertyname = e.target.value;
+  };
+  function timeFn() {
+    setTimeout(() => {
+      a.propertyname = "8888";
+    }, 3000);
   }
-  function timeFn(){
-    setTimeout(()=>{
-      a.propertyname = '8888'
-    },3000)
-  }
-  timeFn()
+  timeFn();
 </script>
-
 ```
 
 vdom 是虚拟 DOM(Virtual DOM)的简称，指的是用 JS 模拟的 DOM 结构，将 DOM 变化的对比放在 JS 层来做。换而言之，vdom 就是 JS 对象。
@@ -110,7 +117,9 @@ vdom 是虚拟 DOM(Virtual DOM)的简称，指的是用 JS 模拟的 DOM 结构�
 ## 发布者订阅者的设计模式
 
 ## this 的指向
-this永远指向的是最后调用它的对象，也就是看它执行的时候是谁调用的
+
+this 永远指向的是最后调用它的对象，也就是看它执行的时候是谁调用的
+
 ## 原型链 微任务宏任务
 
 原型
@@ -150,7 +159,7 @@ this永远指向的是最后调用它的对象，也就是看它执行的时候�
 
 当引用类型，新的变量复制的是在栈中指向原数据的地址，所以当原数据发生改变的时候新变量的值也会发生变化
 
-``` js
+```js
 // 浅拷贝
 function shallowCopy(target,source){
     if(!target || typeOf target !== 'object') return
@@ -181,32 +190,32 @@ function deepCopy(target,source){
 
 ## 怎么画一条 0.5px 的线
 
-``` css
-.halfBorder{
-    border:1px solid black;
-    tranform:scale(0.5,0.5)
+```css
+.halfBorder {
+  border: 1px solid black;
+  tranform: scale(0.5, 0.5);
 }
 ```
 
 ## 两个数组合并之后去重
 
-``` js
-    let concatArr = a.concat(b)
+```js
+let concatArr = a.concat(b);
 
-    function unqi(arr) {
-      let hashMap = new Map
-      let requestArr = []
-      for (let i = 0; i < arr.length; i++) {
-        if (hashMap.has(arr[i])) {
-          hashMap.set(arr[i], true)
-        } else {
-          hashMap.set(arr[i], false)
-          requestArr.push(arr[i])
-        }
-      }
-      return requestArr
+function unqi(arr) {
+  let hashMap = new Map();
+  let requestArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (hashMap.has(arr[i])) {
+      hashMap.set(arr[i], true);
+    } else {
+      hashMap.set(arr[i], false);
+      requestArr.push(arr[i]);
     }
-    console.log(unqi(concatArr));
+  }
+  return requestArr;
+}
+console.log(unqi(concatArr));
 ```
 
 ## `set` `map` `weakset` `weakmap` 的区别
@@ -223,18 +232,52 @@ weakmap 只接受对象作为键名（null 除外），不能遍历，键名对�
 
 reduce 实质上是一个累计器函数，通过用户自定义的累计器对数组成员进行自定义累计，得出一个由累计器生成的值。另外 reduce 还有一个胞弟 reduceRight，两个方法的功能其实是一样的，只不过 reduce 是升序执行，reduceRight 是降序执行。
 
-``` js
+```js
 function Uniq(arr = []) {
-    return arr.reduce((t, v) => t.includes(v) ? t : [...t, v], []);
+  return arr.reduce((t, v) => (t.includes(v) ? t : [...t, v]), []);
 }
 const arr = [2, 1, 0, 3, 2, 1, 2];
 Uniq(arr); // [2, 1, 0, 3]
-
 ```
 
 ## 数组的`map` , `filter` , `foreach` , `every` , `some` ,`reduce`方法
 
 ## 判断一个变量的数据类型是什么怎么判断
+
+- Object.prototype.toString.call()
+
+  ```js
+  Object.prototype.toString.call("string"); // "[Object String]"
+  Object.prototype.toString.call(true); // "[Object Boolean]"
+  Object.prototype.toString.call(() => {}); // "[Object Function]"
+  ```
+
+- typeof
+
+  ```js
+  typeof "string"; // "string"
+  typeof true; // "boolean"
+  typeof 2021; // "number"
+  typeof []; // "object"
+  // 只能判断基本类型 判断不了对象的类型（array,function）
+  ```
+
+- instanceof
+
+  ```js
+  [] instanceof Array; // true
+
+  let Afn = () => {};
+  Afn instanceof Function; // true
+  let a = null,
+    b;
+  a instanceof null; // Right-hand side of 'instanceof' is not an object
+  b instanceof undefined; // Right-hand side of 'instanceof' is not an object
+  // 不能判断 undefined 和 null
+  ```
+
+- constructor
+  - 不能判断 undefined 和 null
 
 ## `instanceof`和`typeof`区别以及各自优劣
 
@@ -243,6 +286,17 @@ typeof 用来区分 undefined,number,boolean,string,funciton,object
 instanceof 用来区分一个 object 属于什么类（）
 
 instanceof 运算符是用来测试一个对象是否在其原型链原型构造函数的属性。其语法是 object instanceof constructor
+
+## NaN
+
+```js
+let a = NaN;
+typeof a; // 'number'
+a == NaN; // false
+isNaN(a); // true
+```
+
+请使用 isNaN() 来判断一个值是否是数字。原因是 NaN 与所有值都不相等，包括它自己。
 
 ## `==`和`===`的区别
 
@@ -296,7 +350,7 @@ BFC 的特性：
 
 ES6 导出/入模块方式：
 
-``` js
+```js
 // 导出
 function fn(a){
   console.log(a)
@@ -310,7 +364,7 @@ fn()
 
 CommonJS 导出/入模块方式：
 
-``` js
+```js
 // 导出
 function fn(a){
   console.log(a)
@@ -363,7 +417,9 @@ Bebal 转译的过程可以分成三部分 代码解析 代码转换 代码生�
 ## 什么时候用箭头函数
 
 ## 怎么修改 this 指向
+
 bind ,apply,call
+
 ## bind , apply ,call 各自有什么区别
 
 ## 有没有改过 webpack 的配置
@@ -371,28 +427,28 @@ bind ,apply,call
 ## Nuxt 和 vue 有什么区别
 
 ## 服务端渲染和客户端渲染的区别优劣
-服务器端渲染的话，首先，前端耗时少。因为后端拼接完了html，浏览器只需要直接渲染出来。
 
-其次，有利于SEO。无需占用客户端资源。即解析模板的工作完全交由后端来做，客户端只要解析标准的html页面即可，这样对于客户端的资源占用更少，尤其是移动端，也可以更省电。
+服务器端渲染的话，首先，前端耗时少。因为后端拼接完了 html，浏览器只需要直接渲染出来。
+
+其次，有利于 SEO。无需占用客户端资源。即解析模板的工作完全交由后端来做，客户端只要解析标准的 html 页面即可，这样对于客户端的资源占用更少，尤其是移动端，也可以更省电。
 
 后端生成静态化文件。
 
 但是另一方面来讲的话，服务器端渲染不利于前后端分离，开发效率低。使用服务器端渲染，则无法进行分工合作，则对于前端复杂度高的项目，不利于项目高效开发。
-
 
 ## vue 服务端渲染的原理
 
 ## 单页面和多页面的区别
 
 ## 单页面如何解决首页加载慢的问题
+
 图片优化
 
 路由懒加载
 
-webpack打包优化
+webpack 打包优化
 
 按需引入
-
 
 ## js 里面的 this 是什么
 
@@ -414,30 +470,30 @@ webpack打包优化
 
 在浮动元素下新增一个空的 div 样式 clear:both
 
-``` css
-floatDiv{
-  clear:both
+```css
+floatDiv {
+  clear: both;
 }
 // 添加无意义标签 语义化差
 ```
 
 伪元素清除浮动 (推荐使用)
 
-``` css
-floatBox::after{
-  content:'';
-  clear:both;
+```css
+floatBox::after {
+  content: "";
+  clear: both;
   display: block;
   height: 0;
-  visibility: hidden
+  visibility: hidden;
 }
 ```
 
 BFC 清除浮动
 
-``` css
-floatBox{
-  overflow:hidden;
+```css
+floatBox {
+  overflow: hidden;
 }
 
 // 内容增多的时候超过盒子大小会导致内容被隐藏
@@ -449,7 +505,7 @@ floatBox{
 
 1.  URL 解析
 2.  DNS 解析
-3.  
+3.
 4.  TCP/IP 链接
 5.  服务器处理请求
 6.  浏览器响应请求
@@ -478,8 +534,8 @@ vuex
 ```
 
 ## 说说 Vuex 的五个核心属性
-- State
-  - 
+
+- ## State
 - Mutations
 - Getter
 - Actions
@@ -516,21 +572,20 @@ var p2 = new Person()
 
 1. 新生成一个对象
 2. 链接到原型
-3. 绑定this
+3. 绑定 this
 4. 返回新对象
 
 ## 基本数据类型 null 和 undefined
 
-``` javascript
+```javascript
+typeof null; // 'object'
 
-typeof null  // 'object'
+typeof undefined; // 'undefined'
 
-typeof undefined // 'undefined'
+let value = null,
+  a;
 
-let value = null, a 
+value == a; // true
 
-value == a // true 
-
-value === a // false
-
+value === a; // false
 ```

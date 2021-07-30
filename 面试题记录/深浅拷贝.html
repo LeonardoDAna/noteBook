@@ -30,30 +30,30 @@
 </body>
 <script>
   // 浅拷贝
-  function shallowCopy(target, source) {
-    if (!target || typeof target !== 'object') return
-    if (!source || typeof source !== 'object') return
-    for (let key in source) {
-      if (source.hasOwnProperty(key)) {
-        target[key] = source[key]
-      }
-    }
-  }
+  // function shallowCopy(target, source) {
+  //   if (!target || typeof target !== 'object') return
+  //   if (!source || typeof source !== 'object') return
+  //   for (let key in source) {
+  //     if (source.hasOwnProperty(key)) {
+  //       target[key] = source[key]
+  //     }
+  //   }
+  // }
 
-  function deepCopy(target, source) {
-    if (!target || typeof target !== 'object') return
-    if (!source || typeof source !== 'object') return
-    for (let key in source) {
-      if (source.hasOwnProperty(key)) {// 防止source在原型链上找属性
-        if (source[key] && typeof source[key] == 'object') {
-          target[key] = Array.isArray(source[key]) ? [] : {}
-          deepCopy(target[key], source[key])
-        } else {
-          target[key] = source[key]
-        }
-      }
-    }
-  }
+  // function deepCopy(target, source) {
+  //   if (!target || typeof target !== 'object') return
+  //   if (!source || typeof source !== 'object') return
+  //   for (let key in source) {
+  //     if (source.hasOwnProperty(key)) {// 防止source在原型链上找属性
+  //       if (source[key] && typeof source[key] == 'object') {
+  //         target[key] = Array.isArray(source[key]) ? [] : {}
+  //         deepCopy(target[key], source[key])
+  //       } else {
+  //         target[key] = source[key]
+  //       }
+  //     }
+  //   }
+  // }
   let obj = {
     name: 'wang',
     age: 23,

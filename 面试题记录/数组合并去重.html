@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组合并去重</title>
+</head>
+
+<body>
+  <script>
+    let arrA = [12, "leo", "DAna", {
+      age: 18,
+      name: "leo",
+      hobbies: ["basketball", "game"]
+    }]
+    let arrB = ["web engineer", 12, "leo", "DAna", {
+      age: 18,
+      name: "leo",
+      hobbies: ["basketball", "game"]
+    }]
+    let newArr = arrA.concat(arrB)
+
+    function unqi(arr) {
+      let hashMap = new Map()
+      let response = []
+      for (let i = 0; i < arr.length; i++) {
+        if (hashMap.has(arr[i])) {
+          hashMap.set(arr[i], true)
+        } else {
+          hashMap.set(arr[i], false)
+          response.push(arr[i])
+        }
+      }
+
+      return response
+    }
+    var c = arrA.concat(arrB.filter(function (item) {
+      return arrA.indexOf(item) < 0;
+    }));
+    console.log(unqi(newArr), c);
+  </script>
+</body>
+
+</html>
