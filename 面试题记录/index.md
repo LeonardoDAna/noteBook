@@ -589,3 +589,17 @@ value == a; // true
 
 value === a; // false
 ```
+
+## for in 和 for of 的区别
+
+for in
+
+```js
+
+```
+
+for of
+
+```js
+
+```
