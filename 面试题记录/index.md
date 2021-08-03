@@ -592,14 +592,10 @@ value === a; // false
 
 ## for in 和 for of 的区别
 
-for in
-
 ```js
-
-```
-
-for of
-
-```js
-
+// for in
+let testArr = ["西瓜", "栗子", "苹果", "橘子"];
+for (let item in testArr) {
+  console.log(item);
+}
 ```
