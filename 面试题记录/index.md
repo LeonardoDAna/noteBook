@@ -593,9 +593,31 @@ value === a; // false
 ## for in 和 for of 的区别
 
 ```js
-// for in
+let testObj = {
+  name: "test",
+  age: "1",
+  birthday: "2021/08/04",
+  type: "object",
+};
 let testArr = ["西瓜", "栗子", "苹果", "橘子"];
 for (let item in testArr) {
   console.log(item);
+  console.log(testArr[item]);
+  // 0 1 2 3
+  // 西瓜 栗子 苹果 橘子
+}
+for (let item of testArr) {
+  console.log(item);
+  // 西瓜 栗子 苹果 橘子
+}
+for (let item in testObj) {
+  console.log(item);
+  console.log(testObj[item]);
+  // name age birthday type
+  // test  1  2021/08/04 object
+}
+for (let item of testObj) {
+  console.log(item);
+  // Uncaught TypeError: testObj is not iterable
 }
 ```
