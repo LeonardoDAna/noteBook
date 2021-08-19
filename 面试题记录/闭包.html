@@ -42,7 +42,26 @@
       var item = "hello~~~"
       console.log(item);
     }
-    helloFn()
+    // helloFn()
+    var name = "window"
+    let object = {
+      name: "object",
+      getName: () => {
+        console.log(this.name);
+        // let that = this
+        return function () {
+          return this.name
+        }
+      },
+      getNameFn: function () {
+        console.log(this.name);
+        // let that = this
+        return function () {
+          return this.name
+        }
+      }
+    }
+    console.log(object.getName()(), object.getNameFn()());
   </script>
 </body>
 

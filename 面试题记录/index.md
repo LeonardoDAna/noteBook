@@ -437,7 +437,7 @@ bind ,apply,call
 但是另一方面来讲的话，服务器端渲染不利于前后端分离，开发效率低。使用服务器端渲染，则无法进行分工合作，则对于前端复杂度高的项目，不利于项目高效开发。
 
 ## vue 服务端渲染的原理
-  
+
 ## 单页面和多页面的区别
 
 ## 单页面如何解决首页加载慢的问题
@@ -450,11 +450,6 @@ webpack 打包优化
 
 按需引入
 
-## js在new（）过程中到底做了什么
-- (1) 创建一个新对象；
-- (2) 将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象） ；
-- (3) 执行构造函数中的代码（为这个新对象添加属性） ；
-- (4) 返回新对象。
 ## js 里面的 this 是什么
 
 ## 说一说 js 的作用域链
@@ -466,13 +461,6 @@ webpack 打包优化
 ## 解决跨域问题的方法有哪些
 
 ## 重绘和回流分别是什么概念？有什么不同？什么时候会出现重绘和回流现象？怎么尽量避免？
- 回流 
-
- 当render tree中的一部分(或全部)因为元素的规模尺寸，布局，隐藏等改变而需要重新构建。这就称为回流(reflow)。每个页面至少需要一次回流，就是在页面第一次加载的时候，这时候是一定会发生回流的，因为要构建render tree。在回流的时候，浏览器会使渲染树中受到影响的部分失效，并重新构造这部分渲染树，完成回流后，浏览器会重新绘制受影响的部分到屏幕中，该过程成为重绘。
-
- 重绘
-
-当render tree中的一些元素需要更新属性，而这些属性只是影响元素的外观，风格，而不会影响布局的，比如background-color。则就叫称为重绘。
 
 ## mvvm 的理解
 
@@ -547,7 +535,7 @@ vuex
 
 ## 说说 Vuex 的五个核心属性
 
-- State
+- ## State
 - Mutations
 - Getter
 - Actions
@@ -594,12 +582,42 @@ typeof null; // 'object'
 
 typeof undefined; // 'undefined'
 
-let value = null, a;
+let value = null,
+  a;
 
 value == a; // true
 
 value === a; // false
 ```
-## 如何遍历一个树
-- 广度优先遍历
-- 深度优先遍历
+
+## for in 和 for of 的区别
+
+```js
+let testObj = {
+  name: "test",
+  age: "1",
+  birthday: "2021/08/04",
+  type: "object",
+};
+let testArr = ["西瓜", "栗子", "苹果", "橘子"];
+for (let item in testArr) {
+  console.log(item);
+  console.log(testArr[item]);
+  // 0 1 2 3
+  // 西瓜 栗子 苹果 橘子
+}
+for (let item of testArr) {
+  console.log(item);
+  // 西瓜 栗子 苹果 橘子
+}
+for (let item in testObj) {
+  console.log(item);
+  console.log(testObj[item]);
+  // name age birthday type
+  // test  1  2021/08/04 object
+}
+for (let item of testObj) {
+  console.log(item);
+  // Uncaught TypeError: testObj is not iterable
+}
+```
