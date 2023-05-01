@@ -30,18 +30,18 @@ Vue.use(Router);
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
-    path: "/",
-    component: () => import("../components/HelloWorld.vue"),
-    hidden: true
-  },
-];
+export const constantRoutes = [{
+  path: "/",
+  component: () => import("../view/integration.vue"),
+  hidden: true
+}, ];
 
 const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
-    scrollBehavior: () => ({ y: 0 }),
+    scrollBehavior: () => ({
+      y: 0
+    }),
     routes: constantRoutes
   });
 

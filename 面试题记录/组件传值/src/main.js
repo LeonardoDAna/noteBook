@@ -11,6 +11,7 @@ import '../utils/rem'
 Vue.config.productionTip = false
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 import router from './router'
+import "./assets/common.scss";
 import {
   Toast
 } from 'vant';

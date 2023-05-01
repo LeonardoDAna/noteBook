@@ -1,37 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  <style type="text/css">
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
 
-<body>
-  <script>
-    let person = {
-      name_: "",
-      age: "",
-      get name() {
-        return this.name_
+  <body>
+    <div id="temp"></div>
+  </body>
+  <script type="text/javascript">
+    let h5 =
+      "Explore Select\n\nCollection View all\n\n⽴刻问 >>>\n\n\n\n1  Likes   ·  0 Bookmark\n\n智能盘点2022新⻋新技术\n\n奔驰M139L 2.0T四缸<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span> ... 既然全世界都在有意弱化内燃<span style=color:red>机</span>，那咱们就反其道⽽⾏之，先从传统\n\n<span style=color:red>动</span>⼒开始聊起，咱们先来看看这台地表最强2.0T<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span>。 ... 对此，其总⼯程师表示：“⼋缸<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span>…\n\n1  Likes   ·  0 Bookmark\n\n修⻋⼯具-四轮定位仪使⽤\n\n电脑图像式四轮定位仪的组成 电脑图像式四轮定位仪由主<span style=color:red>机</span>、前后⻋轮检测传感器、传感器 ... center Community Bot Me\n\n Global search\n\n智能盘点2022新⻋新技术\n\n2023-03-08 00:00:00   Update\n\n奔驰M139L 2.0T四缸<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span> ... 既然全世界都在有意弱化内燃<span style=color:red>机</span>，那咱们就反其道⽽⾏之，先从传统<span style=color:red>动</span>⼒开始聊起，咱们先来看看这\n\n对此，其总⼯程师表示：“⼋缸<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span>会增加前<span style=color:red>机</span>舱的⻓度和前轴负载，⽽四缸<span style=color:red>发</span><span style=color:red>动</span><span style=color:red>机</span>+PHEV的组合不\n\n据悉，相⽐ ... ";
+    let temp = document.getElementById("temp");
+    temp.innerHTML = h5;
+
+    let list = [
+      {
+        id: 1,
+        name: "报警管理",
+        children: [
+          {
+            id: 2,
+            name: "消防报警",
+            children: [
+              {
+                id: 3,
+                name: "报警区域1",
+                // maybe more children
+                // children:[...]
+              },
+              {
+                id: 7,
+                name: "报警区域2",
+              },
+              {
+                id: 8,
+                name: "报警区域3",
+              },
+              {
+                id: 9,
+                name: "报警区域4",
+              },
+            ],
+          },
+          {
+            id: 4,
+            name: "视频报警",
+            children: [
+              {
+                id: 10,
+                name: "视频报警1",
+              },
+              {
+                id: 11,
+                name: "视频报警2",
+              },
+              {
+                id: 12,
+                name: "视频报警3",
+              },
+              {
+                id: 13,
+                name: "视频报警4",
+              },
+            ],
+          },
+          {
+            id: 5,
+            name: "门禁报警",
+          },
+          {
+            id: 6,
+            name: "电梯报警",
+          },
+        ],
       },
-      set name(name) {
-        this.name_ = name
-      },
-      sayName() {
-        console.log(`My Name is ${this.name_}`);
+    ];
+
+    function getItemNameById(targetId, list) {
+      let res = list.find((e) => e.id == targetId);
+      if (res) {
+        return res;
+      } else {
+        for (let i = 0; i < list.length; i++) {
+          const item = list[i].children;
+          if (item && item.length > 0) {
+            res = getItemNameById(targetId, item);
+            return res;
+          }
+        }
       }
     }
-    person.name = 'morty'
-    person.sayName()
-    let {
-      name_,
-      age,
-      job = "software engineer"
-    } = person
-    console.log(person);
+    let targetName = getItemNameById(5, list);
+    console.log(targetName.name);
   </script>
-</body>
-
 </html>

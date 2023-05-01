@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+      font-size: 36px;
+      background-color: #4285F4;
+      color: #FBBC05;
+    }
+
+    .countDom {
+      text-align: center;
+    }
+
+    span {
+      font-size: 36px;
+    }
+
+    .daySpan {
+      margin-right: 20px;
+    }
+
+    .hourSpan {
+      margin-right: 20px;
+    }
+
+    .minuteSpan {
+      margin: 0 20px;
+    }
+
+    .secondSpan {
+      margin: 0 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="countDom">
+  </div>
+  <script>
+    let allDay = 60 * 60 * 24
+    let allHour = 60 * 60
+    let allMinute = 60
+
+    let countDown = {
+      day: "",
+      hour: "",
+      minute: "",
+      secondSpan: ""
+    }
+
+    function getTime() {
+      let newTime = Math.round(new Date() / 1000)
+      let lastTime = Math.round(new Date('2022/03/26') / 1000)
+      let stamp = lastTime - newTime
+      let test = new Date(lastTime - newTime)
+      countDown.day = Math.floor((lastTime - newTime) / allDay)
+      stamp = stamp % allDay
+      countDown.hour = Math.floor(stamp / allHour)
+      stamp = stamp % allHour
+      countDown.minute = Math.floor(stamp / allMinute)
+      stamp = stamp % allMinute
+      countDown.secondSpan = stamp
+    }
+
+    setInterval(function () {
+      getTime()
+      let countDom = document.querySelectorAll(".countDom")[0]
+      countDom.innerHTML =
+        '<span class="daySpan">' + countDown.day + '日</span>' +
+        '<span class ="hourSpan">' + countDown.hour +
+        '时</span>' +
+        ':' +
+        '<span class = "minuteSpan" >' +
+        countDown.minute +
+        '分</span>' + ':' + '<span class="secondSpan" >' +
+        countDown.secondSpan +
+        '秒</span >后' + '<span>玫瑰遇上荆棘</span>'
+    }, 1000)
+  </script>
+</body>
+
+</html>
