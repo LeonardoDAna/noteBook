@@ -20,6 +20,16 @@ Cross Origin Resource Sharing（跨源资源共享）
 
     tcp/ip 三次握手完成传输信息
     http 协议是建立在TCP协议之上的一种应用
+    四次挥手
+
+## http 协议和 Https 协议的区别
+
+Http 协议运行在 TCP 之上，明文传输，客户端与服务器端都无法验证对方的身份；
+Https 是身披 SSL(Secure Socket Layer)外壳的 Http，运行于 SSL 上，SSL 运行于 TCP 之上，是添加了加密和认证机制的 HTTP。
+二者之间存在如下不同：
+端口不同：Http 与 Http 使用不同的连接方式，用的端口也不一样，前者是 80，后者是 443；
+资源消耗：和 HTTP 通信相比，Https 通信会由于加减密处理消耗更多的 CPU 和内存资源；
+开销：Https 通信需要证书，而证书一般需要向认证机构购买；
 
 ## 数组和链表的区别
 
@@ -277,6 +287,7 @@ Uniq(arr); // [2, 1, 0, 3]
   typeof 2021; // "number"
   typeof []; // "object"
   // 只能判断基本类型 判断不了对象的类型（array,function）
+  // 也判断不了 null
   ```
 
 - instanceof
@@ -315,6 +326,28 @@ isNaN(a); // true
 
 请使用 isNaN() 来判断一个值是否是数字。原因是 NaN 与所有值都不相等，包括它自己。
 
+## 怎么判断对象为空？
+
+```js
+//  采用 for…in…进行遍历
+function isEmptyObj(obj) {
+  for (let item in obj) {
+    return true;
+  }
+  return false;
+}
+console.log(isEmptyObj({}));
+
+// ES6中新增的Object.keys()
+function isEmpty(obj) {
+  if (Object.keys(obj).length === 0) {
+    return false;
+  }
+  return true;
+}
+console.log(isEmpty({}));
+```
+
 ## `==`和`===`的区别
 
 `==`会有类型转换 `===` 必须要类型相同和值相同才会返回 ture
@@ -322,6 +355,10 @@ isNaN(a); // true
 ## 用 es5 的语法去重[1,1,'a','a',NaN,NaN]
 
 ## `script`标签中的 defer 和 asycn 的区别
+
+async：他是异步加载，不确定何时会加载好；页面加载时，带有 async 的脚本也同时加载，加载好后会立即执行，如果有一些需要操作 DOM 的脚本加载比较慢时，这样会造成 DOM 还没有加载好，脚本就进行操作，会造成错误。
+
+defer：页面加载时，带有 defer 的脚本也同时加载，加载后会等待 页面加载好后，才执行。
 
 ## link 和 @import 的区别
 
@@ -525,11 +562,11 @@ floatBox {
 ## 浏览器到输入网址回车到渲染发生什么
 
 1.  URL 解析 DNS 解析
-2.  TCP 连接
+2.  TCP 连接 三次握手
 3.  发送 HTTP 请求
 4.  服务器处理请求并返回 HTTP 报文
 5.  浏览器解析渲染页面
-6.  连接结束
+6.  连接结束 四次挥手
 
 ## 箭头函数和普通函数的区别
 
@@ -678,4 +715,13 @@ Server-side rendering (SSR)是应用程序通过在服务器上显示网页而�
 
 ### 谈谈你工作中遇到的问题，怎么解决的？
 
-JavaScript 数字精度问题
+### JavaScript 数字精度问题
+
+0.1+0.2 == 0.3 吗 ？ 为什么？
+最可靠的方法是借助方法 toFixed(n) 对结果进行舍入：
+
+### vue2、vue3 的 diff 算法实现差异
+
+vue2、vue3 的 diff 算法实现差异主要体现在：处理完首尾节点后，对剩余节点的处理方式。
+在 vue2 中是通过对旧节点列表建立一个 { key, oldVnode }的映射表，然后遍历新节点列表的剩余节点，根据 newVnode.key 在旧映射表中寻找可复用的节点，然后打补丁并且移动到正确的位置。
+而 vue3 则是建立一个存储新节点数组中的剩余节点在旧节点数组上的索引的映射关系数组，建立完成这个数组后也即找到了可复用的节点，然后通过这个数组计算得到最长递增子序列，这个序列中的节点保持不动，然后将新节点数组中的剩余节点移动到正确的位置。
