@@ -49,10 +49,83 @@ rm [-r -f] 参数 1，参数 2，....参数 n
 - -f 表示 force，强制删除
 - 参数 1，参数 2...参数 n 表示 要删除的文件 or 文件夹的路径，按照空格隔开。
 
-## 通配符
+## 通配符 \*
 
 - [*] 表示匹配任意内容
 - test[*]， 表示匹配任何以 test 开头的内容
 - [*]test， 表示匹配任何以 test 结尾的内容
 - [*]test[*]， 表示匹配任何包含 test 的内容
-  
+
+## 管道符 |
+
+- 管道符的含义是：将管道符左边的命令的结果，作为右边命令的输入
+- 如：cat main.txt | grep hello
+
+## 重定向符号 >,>>
+
+- \> ，将左侧命令的结果，覆盖写入到符号右侧指定的文件中
+
+```vim
+ [root]#: cat main.txt
+ hello world
+ [root]#: echo hello Linux! > main.txt
+ [root]#: cat main.txt
+ hello Linux!
+```
+
+- \>> ，将左侧命令的结果，追加写入到符号右侧指定的文件中
+
+```vim
+ [root]#: cat main.txt
+ hello world
+ [root]#: echo hello Linux! >> main.txt
+ [root]#: cat main.txt
+ hello world
+ hello Linux!
+```
+
+which
+
+- which 可以查找执行命令所在程序在哪个文件里
+
+find 起始文件路径 -name 文件名
+
+- 通过 find 命令去搜索指定的文件
+- 文件名可以使用通配符
+  如: find / -name main[*]
+
+find 起始文件路径 -size +|-n [K/M/G]
+
+- 通过 find 命令去搜索指定文件大小的文件
+- 如 查找小于 10KB 的文件： find / -size -10k
+- 如 查找大于 100MB 的文件： find / -size +100M
+
+grep [-n] 关键字 文件路径
+
+- 选项 -n 可选，表示在结果中显示匹配的行的行号
+- 参数，关键字，必填，表示过滤的关键字
+- 参数，文件路径，必填，表示要过滤内容的文件路径
+
+wc [-c -m -l -w] 文件路径
+
+- 可通过 wc 命令统计文件的行数，单词数量等
+- 选项 -c ，统计 bytes 的数量
+- 选项 -m ，统计字符数量
+- 选项 -l ，统计行数
+- 选项 -w ，统计单词数量
+- 参数 文件路径， 被统计的文件，可作为内容输入
+
+## echo 输出的内容
+
+- 无选项，只有一个参数，表示要输出的内容
+
+```vim
+ [root]#: echo hello world!
+ hello world!
+```
+
+## tail [-f -num] 文件路径
+
+- 选项 -f，表示持续跟踪
+- 选项 -num, 表示查看尾部内容行数
+- 参数 文件路径，表示被跟踪文件路径
