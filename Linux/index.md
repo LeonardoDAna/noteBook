@@ -129,3 +129,19 @@ wc [-c -m -l -w] 文件路径
 - 选项 -f，表示持续跟踪
 - 选项 -num, 表示查看尾部内容行数
 - 参数 文件路径，表示被跟踪文件路径
+
+## chmod [-R] 权限 文件或文件夹
+
+- 选项 -R ，对文件夹内的全部内容应用同样的操作
+
+```vim
+ [root]#:chmod u=rwx,g=rx,o=x main.txt
+ // 其中，u表示user所属用户权限，g表示group组权限，o表示other其他用户权限
+```
+
+## yum [-y] install | remove | search
+
+- 选项 -y ， 自动确认，无需手动确认安装或卸载过程
+- install：安装
+- remove：卸载
+- search：搜索
