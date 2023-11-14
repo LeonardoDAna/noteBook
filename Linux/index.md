@@ -145,3 +145,30 @@ wc [-c -m -l -w] 文件路径
 - install：安装
 - remove：卸载
 - search：搜索
+
+### mysql 操作
+
+查看是否安装 mysql
+rpm -qa | grep mysql
+
+查看是否有安装 mariadb,该软件与 mysql 数据库有冲突，需要手动卸载
+rpm -qa | grep mariadb
+
+查看当前所有 tcp 端口·
+netstat -ntlp
+
+查看所有 1935 端口使用情况·
+netstat -ntulp |grep 1935
+
+重启防火墙
+firewall-cmd --reload
+
+解压文件夹
+tar -xvf 文件名.tar
+tar -xzvf 文件名.tar.gz
+tar -xjvf 文件名.tar.bz2
+tar -xJvf 文件名.tar.xz
+
+打包文件夹
+tar -cvf 打包文件名.tar 文件或目录
+tar -czvf 打包文件名.tar.gz 文件或目录
