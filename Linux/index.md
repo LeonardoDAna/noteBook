@@ -172,3 +172,10 @@ tar -xJvf 文件名.tar.xz
 打包文件夹
 tar -cvf 打包文件名.tar 文件或目录
 tar -czvf 打包文件名.tar.gz 文件或目录
+
+修改 mysql 密码策略
+set global validate_password.policy=LOW;
+
+修改 mysql 用户密码
+ALTER USER 'root'@'%' IDENTIFIED BY 'password';
+  
