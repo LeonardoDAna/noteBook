@@ -20,6 +20,16 @@ Cross Origin Resource Sharing（跨源资源共享）
 
     tcp/ip 三次握手完成传输信息
     http 协议是建立在TCP协议之上的一种应用
+    四次挥手
+
+## http 协议和 Https 协议的区别
+
+Http 协议运行在 TCP 之上，明文传输，客户端与服务器端都无法验证对方的身份；
+Https 是身披 SSL(Secure Socket Layer)外壳的 Http，运行于 SSL 上，SSL 运行于 TCP 之上，是添加了加密和认证机制的 HTTP。
+二者之间存在如下不同：
+端口不同：Http 与 Http 使用不同的连接方式，用的端口也不一样，前者是 80，后者是 443；
+资源消耗：和 HTTP 通信相比，Https 通信会由于加减密处理消耗更多的 CPU 和内存资源；
+开销：Https 通信需要证书，而证书一般需要向认证机构购买；
 
 ## 数组和链表的区别
 
@@ -117,20 +127,6 @@ vdom 是虚拟 DOM(Virtual DOM)的简称，指的是用 JS 模拟的 DOM 结构�
 比如在一个 table 里面有很多数据，每次改动之后，table 标签都得重新创建、渲染，我们不希望这种事情发生，因为 DOM 重绘很消耗浏览器性能。
 
 因此我们采用 JS 对象模拟的方法，将 DOM 的比对操作放在 JS 层，减少浏览器不必要的重绘，提高效率。
-
-1. vue2 diff
-
-   - 新的头和老的头对比
-   - 新的尾和老的尾对比
-   - 新的头和老的尾对比
-   - 新的尾和老的头对比
-
-2. vue3 diff
-
-   - 事件缓存：将事件缓存，可以理解为变成静态的了
-   - 添加静态标记：Vue2 是全量 Diff，Vue3 是静态标记 + 非全量 Diff
-   - 静态提升：创建静态节点时保存，后续直接复用
-   - 使用最长递增子序列优化了对比流程：Vue2 里在 updateChildren() 函数里对比变更，在 Vue3 里这一块的逻辑主要在 patchKeyedChildren() 函数里，具体看下面
 
 ## 箭头函数和普通函数的区别
 
@@ -291,6 +287,7 @@ Uniq(arr); // [2, 1, 0, 3]
   typeof 2021; // "number"
   typeof []; // "object"
   // 只能判断基本类型 判断不了对象的类型（array,function）
+  // 也判断不了 null
   ```
 
 - instanceof
@@ -329,6 +326,28 @@ isNaN(a); // true
 
 请使用 isNaN() 来判断一个值是否是数字。原因是 NaN 与所有值都不相等，包括它自己。
 
+## 怎么判断对象为空？
+
+```js
+//  采用 for…in…进行遍历
+function isEmptyObj(obj) {
+  for (let item in obj) {
+    return true;
+  }
+  return false;
+}
+console.log(isEmptyObj({}));
+
+// ES6中新增的Object.keys()
+function isEmpty(obj) {
+  if (Object.keys(obj).length === 0) {
+    return false;
+  }
+  return true;
+}
+console.log(isEmpty({}));
+```
+
 ## `==`和`===`的区别
 
 `==`会有类型转换 `===` 必须要类型相同和值相同才会返回 ture
@@ -336,6 +355,10 @@ isNaN(a); // true
 ## 用 es5 的语法去重[1,1,'a','a',NaN,NaN]
 
 ## `script`标签中的 defer 和 asycn 的区别
+
+async：他是异步加载，不确定何时会加载好；页面加载时，带有 async 的脚本也同时加载，加载好后会立即执行，如果有一些需要操作 DOM 的脚本加载比较慢时，这样会造成 DOM 还没有加载好，脚本就进行操作，会造成错误。
+
+defer：页面加载时，带有 defer 的脚本也同时加载，加载后会等待 页面加载好后，才执行。
 
 ## link 和 @import 的区别
 
@@ -453,28 +476,6 @@ bind ,apply,call
 
 ## bind , apply ,call 各自有什么区别
 
-```
-  var year = 2021
-  function getDate(month, day) {
-    return this.year + '-' + month + '-' + day
-  }
-
-  let obj = {year: 2022}
-  getDate.call(null, 3, 8)    //2021-3-8
-  getDate.call(obj, 3, 8)     //2022-3-8
-  getDate.apply(obj, [6, 8])  //2022-6-8
-  getDate.bind(obj)(3, 8)     //2022-3-8
-
-```
-
-- call() 方法使用一个指定的 this 值和单独给出的一个或多个参数来调用一个函数。
-
-- apply() 方法使用一个指定的 this 值和单独给出的 一个或多个参数的数组 来调用一个函数。
-
-- bind() 方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数，供调用时使用。
-
-- call()方法接受的语法和作用与 apply()方法类似，只有一个区别就是 call()接受的是一个参数列表，而 apply()方法接受的是一个包含多个参数的数组。
-
 ## 有没有改过 webpack 的配置
 
 ## Nuxt 和 vue 有什么区别
@@ -561,35 +562,11 @@ floatBox {
 ## 浏览器到输入网址回车到渲染发生什么
 
 1.  URL 解析 DNS 解析
-2.  TCP 连接
+2.  TCP 连接 三次握手
 3.  发送 HTTP 请求
 4.  服务器处理请求并返回 HTTP 报文
 5.  浏览器解析渲染页面
-6.  连接结束
-
-7.  用户输入阶段：
-    合成 URL：浏览区会判断用户输入是合法 URL，比如用户输入的是搜索的关键词，默认的搜索引擎会合成新的，如果符合 url 规则会根据 url 协议，在这段内容加上协议合成合法的 url
-
-8.  查找缓存：
-    网络进程获取到 URL，先去本地缓存中查找是否有缓存资源，如果有则拦截请求，直接将缓存资源返回给浏览器进程；否则，进入网络请请求阶段；
-9.  DNS 解析：
-    DNS 查找数据缓存服务中是否缓存过当前域名信息，有则直接返回；否则，会进行 DNS 解析返回域名对应的 IP 和端口号，如果没有指定端口号，http 默认 80 端口，https 默认 443。如果是 https 请求，还需要建立 TLS 连接；
-10. 建立 TCP 连接：
-    TCP 三次握手与服务器建立连接，然后进行数据的传输；（三次握手）
-11. 发送 HTTP 请求：
-    浏览器首先会向服务器发送请求行，它包含了请求方法、请求 URI 和 HTTP 协议的版本；另外还会发送请求头，告诉服务器一些浏览器的相关信息，比如浏览器内核，请求域名；
-
-12. 服务器处理请求：
-    服务器首先返回响应行，包括协议版本和状态码，比如状态码 200 表示继续处理该请求；如果是
-    301，则表示重定向，服务器也会向浏览器发送响应头，包含了一些信息；
-13. 页面渲染:
-    1. 浏览器将获取的 HTML 文档解析成 DOM 树。
-    2. 处理 CSS 标记，构成层叠样式表模型 CSSOM(CSS Object Model)。
-    3. 将 DOM 和 CSSOM 合并为渲染树(rendering tree)，代表一系列将被渲染的对象。
-    4. 渲染树的每个元素包含的内容都是计算过的，它被称之为布局 layout。浏览器使用一种流式处理的方法，只需要一次绘制操作就可以布局所有的元素。
-    5. 将渲染树的各个节点绘制到屏幕上，这一步被称为绘制 painting。
-14. 最后断开 TCP 连接：
-    数据传输完成，正常情况下 TCP 将四次挥手断开连接。但是如果浏览器或者服务器在 HTTP 头部加上 Connection: keep-alive，TCP 就会一直保持连接。
+6.  连接结束 四次挥手
 
 ## 箭头函数和普通函数的区别
 
@@ -734,86 +711,17 @@ Server-side rendering (SSR)是应用程序通过在服务器上显示网页而�
 
 ### vite&&webpack
 
-- vite 使用 esbuild 预构件依赖 。js 是单线程的，而 esbuild 使用 go 语言进行开发，支持多线程。速度比 webpack 快上 10~100 倍。
-- webpack 的 编译流程 ： 分析依赖 => 编译打包 => 交给本地服务器进行渲染。
-- webpack 打包之后存在的问题：随着模块的增多，会造成打出的 bundle 体积过大，进而会造成热更新速度明显拖慢。
-- vite 启动服务器 => 请求模块时按需动态编译显示。
-- webpack 只能打包 commonjs 规范的 js 文件 ，要靠 loader 来将其他类型的文件转换成 js 文件格式，如：
-
-  1.  css-loader 和 style-loader 模块是为了打包 css 的
-  2.  babel-loader 和 babel-core 模块时为了把 ES6 的代码转成 ES5
-  3.  url-loader 和 file-loader 是把图片进行打包的。
-
-- plugin 可以扩展 webpack 的功能，让 webpack 具有更多的灵活性。
-  1. webpack 内置 CommonsChunkPlugin，提取公共代码,提高打包效率，将第三方库和业务代码分开打包
-
 ### 前端工程化
 
 ### 谈谈你工作中遇到的问题，怎么解决的？
 
-JavaScript 数字精度问题
+### JavaScript 数字精度问题
 
-### vue 中常用的修饰符
+0.1+0.2 == 0.3 吗 ？ 为什么？
+最可靠的方法是借助方法 toFixed(n) 对结果进行舍入：
 
-- .stop 阻止冒泡事件
-- .enter 按回车执行
-- .once 只能执行一次
-- .sync
+### vue2、vue3 的 diff 算法实现差异
 
-### computed 和 watch 的区别
-
-- computed 是计算属性，依赖于多个值计算出来的结果，watch 是监听的值发生变化就执行里面的回调,并且 computed 的值有缓存，
-- computed 不支持异步，watch 支持异步
-- computed 默认在页面第一次加载的时候执行， watch 默认第一次加载的时候不执行，如果在页面第一次加载时更新，需要加 immediate:true 属性
-
-### 页面首屏优化
-
-1. 骨架屏
-2. 服务端渲染
-3. 图片懒加载
-4. 路由懒加载
-5. 异步组件？
-6. 减少 http 请求
-
-### vue 中的动态组件
-
-1.Vue2 使用 :is
-
-```
-<template>
-  <component :is="name"></component>
-</template>
-```
-
-### ref 和 reactive 的区别
-
-- ref 可以定义基本类型和对象
-- reactive 只能定义对象
-- ref 操作数据需要通过 .value reactive 不需要
-- ref 通过 Object.defineProperty()的 get 和 set 来实现响应式， reactive 通过 Proxy 来实现响应式
-
-### 普通盒模型 和 怪异盒模型
-
-- 普通盒模型
-  - 元素的 width = content
-- 怪异盒模型
-  - 元素的 width = content + border + padding
-
-### event loop
-
-因为 js 是单线程的，如果某段程序需要等待一会再执行，后面的程序都会被阻塞，这样也就带来了一些问题。为了解决这个问题，js 出现了同步和异步两种任务，两种任务的差异就在于执行的优先级不同。event loop 就是对任务的执行顺序做了详细的规范。
-
-- 常见的微任务 ： promise.then() .then() 里的函数
-- 常见的宏任务 ： setTimeout setInterval callback
-- 执行优先级： 同步任务 --> 微任务 --> 宏任务
-
-### flex 布局
-
-flex:1 ==> flex:1 1 auto
-
-- flex 的默认值为 flex:0 1 auto。flex:1 相当于设置了 flex:1 1 auto。
-
-- flex 实际上是 flex-grow、flex-shrink 和 flex-basis 三个属性的缩写。
-- flex-grow 属性指定了 flex 容器中剩余空间的多少应该被分配给项目。flex-grow 设置的值为扩张因子，默认为 0，剩余空间将会按照这个权重分别分配给子元素项目。
-- flex-shrink 属性指定了 flex 元素的收缩规则。flex 元素仅在默认宽度之和大于容器的时候才会发生收缩。默认属性值为 1，所以在空间不够的时候，子项目将会自动缩小。
-- flex-basis 属性指定了 flex 元素在主轴方向上的初始大小。如果不使用 box-sizing 改变盒模型的话，那么这个属性就决定了 flex 元素的内容的尺寸。如果设置了 flex-basis 值，那么元素占用的空间为 flex-basis 值；如果没有设置或者设置为 auto，那么元素占据的空间为元素的 width/height 值。
+vue2、vue3 的 diff 算法实现差异主要体现在：处理完首尾节点后，对剩余节点的处理方式。
+在 vue2 中是通过对旧节点列表建立一个 { key, oldVnode }的映射表，然后遍历新节点列表的剩余节点，根据 newVnode.key 在旧映射表中寻找可复用的节点，然后打补丁并且移动到正确的位置。
+而 vue3 则是建立一个存储新节点数组中的剩余节点在旧节点数组上的索引的映射关系数组，建立完成这个数组后也即找到了可复用的节点，然后通过这个数组计算得到最长递增子序列，这个序列中的节点保持不动，然后将新节点数组中的剩余节点移动到正确的位置。
