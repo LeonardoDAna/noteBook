@@ -8,32 +8,49 @@
   </head>
 
   <body>
+    <button onclick="debounceFn()">防抖</button>
+    <button onclick="throttleFn()">节流</button>
     <script>
-      // 防抖
+      // 防抖 debounce
       const debounce = function (fn, delay) {
-        let timer = null;
+        let timer;
         return function () {
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            fn.apply(this, arguments);
+          if (timer) {
+            // return
+            clearTimeout(timer);
+          }
+          let _this = this; // 获取debounce执行作用域的this
+          let args = arguments;
+          timer = setTimeout(function () {
+            fn.apply(_this, args); // 用apply指向调用debounce的对象，相当于_this.fn(args);
           }, delay);
         };
       };
+      let debounceLog = function () {
+        console.log("防抖");
+      };
+      let throttleLog = function () {
+        console.log("节流");
+      };
+      let debounceFn = debounce(debounceLog, 3000);
 
-      // 节流
+      // 节流 throttle
 
       const throttle = (fn, delay) => {
-        let valid = true;
+        let timer;
         return function () {
-          if (valid) {
-            setTimeout(() => {
-              fn.apply(this.arguments);
-              valid = true;
-            }, delay);
-            valid = false;
+          let _this = this;
+          let argu = arguments;
+          if (timer) {
+            return;
           }
+          timer = setTimeout(() => {
+            fn.apply(_this, argu);
+            timer = null;
+          }, delay);
         };
       };
+      let throttleFn = throttle(throttleLog, 3000);
     </script>
   </body>
 </html>
