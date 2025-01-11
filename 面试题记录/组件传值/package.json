@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
+    "iconv-lite": "^0.6.3",
     "js-cookie": "^2.2.1",
     "postcss-pxtorem": "^5.1.1",
     "vant": "^2.12.6",

@@ -1,56 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style></style>
-  </head>
 
-  <body>
-    <button onclick="debounceFn()">防抖</button>
-    <button onclick="throttleFn()">节流</button>
-    <script>
-      // 防抖 debounce
-      const debounce = function (fn, delay) {
-        let timer;
-        return function () {
-          if (timer) {
-            // return
-            clearTimeout(timer);
-          }
-          let _this = this; // 获取debounce执行作用域的this
-          let args = arguments;
-          timer = setTimeout(function () {
-            fn.apply(_this, args); // 用apply指向调用debounce的对象，相当于_this.fn(args);
-          }, delay);
-        };
-      };
-      let debounceLog = function () {
-        console.log("防抖");
-      };
-      let throttleLog = function () {
-        console.log("节流");
-      };
-      let debounceFn = debounce(debounceLog, 3000);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Demo</title>
+</head>
 
-      // 节流 throttle
+<body>
 
-      const throttle = (fn, delay) => {
-        let timer;
-        return function () {
-          let _this = this;
-          let argu = arguments;
-          if (timer) {
-            return;
-          }
-          timer = setTimeout(() => {
-            fn.apply(_this, argu);
-            timer = null;
-          }, delay);
-        };
-      };
-      let throttleFn = throttle(throttleLog, 3000);
-    </script>
-  </body>
+  <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000;"></canvas>
+
+  <script>
+    // 获取Canvas元素
+
+    let lineHeight = 20;
+    let height = 500;
+    let width = 500;
+    var canvas = document.getElementById('myCanvas');
+    // 创建2D渲染上下文
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = "rgba(0,0,0,1)";
+    ctx.fillRect(0, 0, height, width);
+
+    ctx.fillStyle = "rgba(50,211,166,0.5)";
+    ctx.fillRect(6, height - lineHeight * 3 - 6, 150, lineHeight);
+    ctx.fillStyle = "#fff";
+    let fontWidth = ctx.measureText("上海电气").width; //字体宽度
+    let fontHeight = ctx.measureText("上海电气").actualBoundingBoxAscent + ctx.measureText("上海电气").actualBoundingBoxDescent; //字体高度
+    ctx.fillText("上海电气", 6 + (150 - fontWidth) / 2, height - lineHeight * 2 - 12)
+
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.fillRect(6, height - lineHeight * 2 - 6, 150, lineHeight * 2);
+
+    ctx.fillStyle = "#fff";
+    ctx.strokeText('拍摄人：userName', 12, height - lineHeight - 12);
+    ctx.fillText('拍摄人：userName', 12, height - lineHeight - 12);
+
+    ctx.strokeText('拍摄时间：2024-6-18', 12, height - 12);
+    ctx.fillText('拍摄时间：2024-6-18', 12, height - 12);
+
+  </script>
+
+</body>
+
 </html>
